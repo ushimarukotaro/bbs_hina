@@ -4,10 +4,11 @@ class Login extends \Bbs\Controller {
   public function run() { 
     // ログインしていればトップページへ移動
     if ($this->isLoggedIn()) {
+      session_destroy();  //後で消す
       header('Location: ' . SITE_URL);
       exit();
     }
-    if($_SERVER['REQUWST_METHOD'] === 'POST') {
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
       $this->postProcess();
     }
   }
