@@ -16,6 +16,8 @@
   <script src="https://kit.fontawesome.com/8bc1904d08.js"></script>
   <link rel="stylesheet" href="./css/styles.css">
 </head>
+
+
 <body>
 <header class="sticky-top header">
 <div class="header__inner">
@@ -35,15 +37,16 @@
   </nav>
   <div class="header-r">
     <?php
-      if(isset($_SESSION['me'])) { var_dump($_SESSION['me']->id);?>
-      <a href="<?= SITE_URL; ?>/mypage.php"><span class="name"><?= h($_SESSION['me']->username); ?></span><span class="image"><img src="./gazou/cat.jpg" alt=""></span></a>
+      if(isset($_SESSION['me'])) { ?>
+      <div class="prof-show">
+        <a href="<?= SITE_URL; ?>/mypage.php"><span class="name"><?= h($_SESSION['me']->username); ?></span></a>
+      </div>
       <form action="logout.php" method="post" id="logout" class="user-btn">
         <input type="submit" value="ログアウト">
         <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
       </form>
-    <?php  } ?>
+      <?php  } ?>
   </div>
 </div>
 </header>
 <div class="wrapper">
-

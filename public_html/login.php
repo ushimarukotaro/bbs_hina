@@ -29,11 +29,11 @@
   </div>
 </div>
 </header> -->
-<div class="wrapper">
+<!-- <div class="wrapper"> -->
 <?php
-require_once(__DIR__ .'/header.php');
+require_once(__DIR__ . '/header.php');
 $app = new Bbs\Controller\Login();
-$app->run 
+$app->run();
 ?>
 <div class="container">
   <form action="" method="post" id="login" class="form">
@@ -51,8 +51,8 @@ $app->run
   </form>
   <p class="fs12"><a href="signup.php">ユーザー登録</a></p>
 </div><!--container -->
-<?php require_once(__DIR__ .'/footer.php') ?>
-</div> <!-- wrapper -->
+<?php require_once(__DIR__ . '/footer.php') ?>
+<!-- </div> wrapper -->
 <!-- <p class="copy"><small>&copy; 2019 code lab.</small></p> -->
 <script src="./js/bbs.js"></script>
 </body>
