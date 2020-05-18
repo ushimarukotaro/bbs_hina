@@ -1,24 +1,31 @@
 <?php
+
 namespace Bbs\Controller;
-class Thread extends \Bbs\Controller {
-  public function run() {
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      if($_POST['type'] === 'createthread') {
+
+class Thread extends \Bbs\Controller
+{
+  public function run()
+  {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      if ($_POST['type'] === 'createthread') {
         $this->createThread();
+      } elseif ($_POST['type'] === 'createcomment') {
+        $this->createComment();
       }
     }
   }
-  private function createThread() {
+  private function createThread()
+  {
     try {
       $this->validate();
-    } catch(\Bbs\Exception\EmptyPost $e) {
+    } catch (\Bbs\Exception\EmptyPost $e) {
       $this->setErrors('create_thread', $e->getMessage());
-    } catch(\Bbs\Exception\CharLength $e) {
+    } catch (\Bbs\Exception\CharLength $e) {
       $this->setErrors('create_thread', $e->getMessage());
     }
     $this->setValues('thread_name', $_POST['thread_name']);
     $this->setValues('comment', $_POST['comment']);
-    if($this->hasError()) {
+    if ($this->hasError()) {
       return;
     } else {
       $threadModel = new \Bbs\Model\Thread();
@@ -27,17 +34,43 @@ class Thread extends \Bbs\Controller {
         'comment' => $_POST['comment'],
         'user_id' => $_SESSION['me']->id
       ]);
-      header('Location: '. SITE_URL . '/thread_all.php');
+      header('Location: ' . SITE_URL . '/thread_all.php');
       exit();
     }
   }
-  private function validate() {
-    if($_POST['type'] === 'createthread') {
+
+  private function createComment()
+  {
+    try {
+      $this->validate();
+    } catch (\Bbs\Exception\EmptyPost $e) {
+      $this->setErrors('comment', $e->getMessage());
+    } catch (\Bbs\Exception\CharLength $e) {
+      $this->setErrors('comment', $e->getMessage());
+    }
+    $this->setValues('content', $_POST['content']);
+    if ($this->hasError()) {
+      return;
+    } else {
+      $threadModel = new \Bbs\Model\Thread();
+      $threadModel->createComment([
+        'thread_id' => $_POST['thread_id'],
+        'user_id' => $_SESSION['me']->id,
+        'content' => $_POST['content']
+      ]);
+    }
+    header('Location: ' . SITE_URL . '/thread_disp.php?thread_id=' . $_POST['thread_id']);
+    exit();
+  }
+
+  private function validate()
+  {
+    if ($_POST['type'] === 'createthread') {
       if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
         echo "不正なトークンです！";
         exit();
       }
-      if(!isset($_POST['thread_name'])) {
+      if (!isset($_POST['thread_name'])) {
         echo "不正な投稿です";
         exit();
       }
@@ -48,6 +81,14 @@ class Thread extends \Bbs\Controller {
         throw new \Bbs\Exception\CharLength("スレッド名が長すぎます！");
       }
       if (mb_strlen($_POST['comment']) > 200) {
+        throw new \Bbs\Exception\CharLength("コメントが長すぎます！");
+      }
+    }
+    if ($_POST['type'] === 'createcomment') {
+      if ($_POST['content'] === '') {
+        throw new \Bbs\Exception\EmptyPost("コメントが入力されていません！");
+      }
+      if (mb_strlen($_POST['content']) > 200) {
         throw new \Bbs\Exception\CharLength("コメントが長すぎます！");
       }
     }
