@@ -284,10 +284,28 @@ textarea {
   height: 0;
 }
 
-.file-btn {
+/* .file-btn {
   width: 180px;
   font-size: 12px;
   font-weight: bold;
+} */
+
+.file-btn {
+  display: block;
+  color: #fff;
+  padding: 4px 18px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #3232328f;
+  border-radius: 4px;
+  position: absolute;
+  left: 4px;
+  bottom: 90px;
+  cursor: pointer;
+}
+
+.file-btn:hover {
+  background-color: #323232;
 }
 
 .copy {
@@ -313,4 +331,11 @@ textarea {
   line-height: 30px;
   padding: 0;
   font-weight: bold;
+}
+
+.header_img {
+  margin-left: 5px;
+  width: 40px;
+  height: auto;
+  border-radius: 50%;
 }

@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ .'/header.php');
+require_once(__DIR__ . '/header.php');
 $app = new Bbs\Controller\UserUpdate();
 $app->run();
 ?>
@@ -25,7 +25,7 @@ $app->run();
     <div class="col-md-4">
       <div class="form-group">
         <!-- <p class="err"></p> -->
-        <div class="imgarea <?= isset($app->getValues()->image) ? '': 'noimage' ?>">
+        <div class="imgarea <?= isset($app->getValues()->image) ? '' : 'noimage' ?>">
           <label>
             <span class="file-btn">
               編集
@@ -33,7 +33,7 @@ $app->run();
             </span>
           </label>
           <div class="imgfile">
-            <img src="<?= isset($app->getValues()->image) ? './gazou/'. h($app->getValues()->image) : './asset/img/noimage.png'; ?>" alt="">
+            <img src="<?= isset($app->getValues()->image) ? './gazou/' . h($app->getValues()->image) : './asset/img/noimage.png'; ?>" alt="">
           </div>
         </div>
       </div>
@@ -41,5 +41,5 @@ $app->run();
   </form>
 </div>
 <?php
-require_once(__DIR__ .'/footer.php');
+require_once(__DIR__ . '/footer.php');
 ?>
