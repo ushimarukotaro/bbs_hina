@@ -4,8 +4,8 @@ class UserUpdate extends \Bbs\Controller {
   public function run() {
     $this->showUser();
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      var_dump($_FILES['image']);
-      exit;
+      // var_dump($_FILES['image']);
+      // exit;
       $this->updateUser();
     }
   }
@@ -31,10 +31,10 @@ class UserUpdate extends \Bbs\Controller {
     if ($this->hasError()) {
       return;
     } else {
-      $user_img = $_FILE['image'];
+      $user_img = $_FILES['image'];
       $old_img = $_POST['old_image'];
       $ext = substr($user_img['name'], strrpos($user_img['name'], '.') + 1);
-      $user_img['name'] = uniqid("img") .'.'. $ext;
+      $user_img['name'] = uniqid("img_") .'.'. $ext;
       try {
         $userModel = new \Bbs\Model\User();
         if($user_img['size'] > 0) {
@@ -54,7 +54,7 @@ class UserUpdate extends \Bbs\Controller {
           ]);
         }
       }
-      catch (\Bbs\Exeption\DuplicateEmail $e) {
+      catch (\Bbs\Exception\DuplicateEmail $e) {
         $this->setErrors('email', $e->getMessage());
         return;
       }

@@ -42,12 +42,12 @@ class User extends \Bbs\Model {
   }
 
   public function update($values) {
-    $stmt = $this->db->prepare("UPDATE users SET username = :username,email,email = :email, image = :image, modified = now() where id = :id");
+    $stmt = $this->db->prepare("UPDATE users SET username = :username,email = :email, image = :image, modified = now() where id = :id");
     $stmt->execute([
       ':username' => $values['username'],
       ':email' => $values['email'],
-      'image' => $values['userid'],
-      ':id' => $_SESSION['me'] ->id,
+      'image' => $values['userimg'],
+      ':id' => $_SESSION['me']->id,
     ]);
     if ($res === false) {
       throw new \Bbs\Exception\DuplicateEmail();
