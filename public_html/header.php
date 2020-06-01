@@ -1,8 +1,10 @@
 <?php
 require_once(__DIR__ . '/../config/config.php'); // 栗岩追記
-require_once(__DIR__ .'/../lib/Controller/UserUpdate.php');
-$app = new Bbs\Controller\UserUpdate();
-$app->run();
+if (isset($_SESSION['me'])) {
+  $app = new Bbs\Controller\UserUpdate();
+  $app->run();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
