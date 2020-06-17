@@ -70,10 +70,10 @@ class UserUpdate extends \Bbs\Controller {
       exit();
     }
     if (!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)) {
-      throw new \Bbs\Exception\InvaridEmail("メールアドレスが不正です!");
+      throw new \Bbs\Exception\InvalidEmail("メールアドレスが不正です!");
     }
     if ($_POST['username'] === '') {
-      throw new \Bbs\Exception\InvaridName("ユーザー名が入力されていません!");
+      throw new \Bbs\Exception\InvalidName("ユーザー名が入力されていません!");
     }
   }
 }

@@ -25,10 +25,18 @@ class Thread extends \Bbs\Model {
 
   //  全スレッド取得
   public function getThreadAll(){
-    $stmt = $this->db->query("SELECT id,title,created FROM threads WHERE delflag = 0 ORDER BY id desc");
+    $user_id = $_SESSION['me']->id;
+    $stmt = $this->db->query("SELECT t.id AS t_id,title,t.created,f.id AS f_id FROM threads AS t LEFT JOIN favorites AS f ON t.delflag = 0 AND t.id = f.thread_id AND f.user_id = $user_id ORDER BY t.id desc");
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
+  //　お気に入り中の全スレッド取得
+  public function getThreadFavoriteAll() {
+    $user_id = $_SESSION['me']->id;
+    $stmt = $this->db->query("SELECT t.id AS t_id,title,t.created,f.id AS f_id FROM threads AS t INNER JOIN favorites AS f ON t.delflag = 0 AND t.id = f.thread_id  AND f.user_id = $user_id ORDER BY t.id desc");
+    return $stmt->fetchAll(\PDO::FETCH_OBJ);
+  }
+  
   //　最新のコメント取得
   public function getComment($thread_id) {
     $stmt = $this->db->prepare("SELECT comment_num,username,content,comments.created FROM (threads INNER JOIN comments on threads.id = comments.thread_id) INNER JOIN users ON comments.user_id = users.id WHERE threads.id =:thread_id AND comments.delflag = 0 ORDER BY comment_num ASC LIMIT 5;");
@@ -91,6 +99,45 @@ class Thread extends \Bbs\Model {
     } catch (\Exception $e) {
       echo $e->getMessage();
       //　エラーがあったら元に戻す
+      $this->db->rollBack();
+    }
+  }
+
+  public function changeFavorite($values) {
+    try {
+      $this->db->beginTransaction();
+      //　レコード取得
+      $stmt = $this->db->prepare("SELECT * FROM favorites WHERE thread_id = :thread_id AND user_id = : user_id");
+      $stmt->execute([
+        ':thread_id' => $values['thread_td'],
+        ':user_id' => $values['user_id']
+      ]);
+      // fetchMode　データを扱いやすい形に変換
+      $stmt->setFetchMode(\PDO::FETCH_CLASS, 'stdClass');
+      $rec = $stmt->fetch();
+      $fav_flag = 0;
+      if (empty($rec)) {
+        $sql = "INSERT INTO favorites (thread_id,user_id,created) VALUES (:thread_id,:user_id,now())";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+          ':thread_id' => $values['thread_td'],
+          ':user_id' => $values['user_id']
+        ]);
+        $fav_flag = 1;
+      } else {
+        $sql = "DELETE FROM favorites WHERE thread_id = :thread_id AND user_id = :user_id";
+        $stnt = $this->db->prepare($sql);
+        $stmt->execute([
+          ':thread_id' => $values['thread_td'],
+          ':user_id' => $values['user_id']
+        ]);
+        $fav_flag = 0;
+      }
+      $this->db->commit();
+      return $fav_flag;
+    } catch (\Exception $e) {
+      echo $e->getMessage();
+      // エラーがあったら元に戻す
       $this->db->rollBack();
     }
   }

@@ -42,6 +42,7 @@ if (isset($_SESSION['me'])) {
         </ul>
       </nav>
       <div class="header-r">
+        <div class="prof-show" data-me="<?= h($_SESSION['me']->id); ?>"></div>
         <?php
         if (isset($_SESSION['me'])) { ?>
           <div class="prof-show">
