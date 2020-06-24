@@ -11,7 +11,7 @@ $threads = $threadMod->getThreadAll();
         <h2 class="thread__ttl">
           <?= h($thread->title); ?>
         </h2>
-        <div class="fav__btn<?php if(isset($thread->f_id)) { echo ' active';} ?>"><i class="fas fa-star"></i> </div>
+        <div class="fav__btn<?php if(isset($thread->f_id)) { echo ' active';} ?>"><i class="fas fa-star"></i></div>
       </div>
       <ul class="thread__body">
         <?php
