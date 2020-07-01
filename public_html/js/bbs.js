@@ -1,4 +1,4 @@
-'use strict'
+
 $(function () {
   $('input[type=file]').change(function () {
     var file = $(this).prop('files')[0];
@@ -28,7 +28,7 @@ $(function () {
     $myid = $('.prof-show').data('me');
     $.ajax({
       type: 'post',
-      url: origin + '/public_html/ajax.php',
+      url: origin + '/bbs_hina/public_html/ajax.php',
       data: {
         'thread_id': $threadid,
         'user_id': $myid,
