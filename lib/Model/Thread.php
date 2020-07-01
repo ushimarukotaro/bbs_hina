@@ -1,20 +1,24 @@
 <?php
+
 namespace Bbs\Model;
-class Thread extends \Bbs\Model {
-  public function createThread($values) {
+
+class Thread extends \Bbs\Model
+{
+  public function createThread($values)
+  {
     try {
       $this->db->beginTransaction();
       $sql = "INSERT INTO threads (user_id,title,created,modified) VALUES (:user_id,:title,now(),now())";
       $stmt = $this->db->prepare($sql);
-      $stmt->bindValue('user_id',$values['user_id']);
-      $stmt->bindValue('title',$values['title']);
+      $stmt->bindValue('user_id', $values['user_id']);
+      $stmt->bindValue('title', $values['title']);
       $res = $stmt->execute();
       $thread_id = $this->db->lastInsertId();
       $sql = "INSERT INTO comments (thread_id,comment_num,user_id,content,created,modified) VALUES (:thread_id,1,:user_id,:content,now(),now())";
       $stmt = $this->db->prepare($sql);
-      $stmt->bindValue('thread_id',$thread_id);
-      $stmt->bindValue('user_id',$values['user_id']);
-      $stmt->bindValue('content',$values['comment']);
+      $stmt->bindValue('thread_id', $thread_id);
+      $stmt->bindValue('user_id', $values['user_id']);
+      $stmt->bindValue('content', $values['comment']);
       $res = $stmt->execute();
       $this->db->commit();
     } catch (\Exception $e) {
@@ -24,75 +28,82 @@ class Thread extends \Bbs\Model {
   }
 
   //  全スレッド取得
-  public function getThreadAll(){
+  public function getThreadAll()
+  {
     $user_id = $_SESSION['me']->id;
     $stmt = $this->db->query("SELECT t.id AS t_id,title,t.created,f.id AS f_id FROM threads AS t LEFT JOIN favorites AS f ON t.delflag = 0 AND t.id = f.thread_id AND f.user_id = $user_id ORDER BY t.id desc");
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
   //　お気に入り中の全スレッド取得
-  public function getThreadFavoriteAll() {
+  public function getThreadFavoriteAll()
+  {
     $user_id = $_SESSION['me']->id;
     $stmt = $this->db->query("SELECT t.id AS t_id,title,t.created,f.id AS f_id FROM threads AS t INNER JOIN favorites AS f ON t.delflag = 0 AND t.id = f.thread_id  AND f.user_id = $user_id ORDER BY t.id desc");
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
-  
+
   //　最新のコメント取得
-  public function getComment($thread_id) {
+  public function getComment($thread_id)
+  {
     $stmt = $this->db->prepare("SELECT comment_num,username,content,comments.created FROM (threads INNER JOIN comments on threads.id = comments.thread_id) INNER JOIN users ON comments.user_id = users.id WHERE threads.id =:thread_id AND comments.delflag = 0 ORDER BY comment_num ASC LIMIT 5;");
     $stmt->execute([':thread_id' => $thread_id]);
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
   //  コメント数取得
-  public function getCommentCount($thread_id) {
+  public function getCommentCount($thread_id)
+  {
     $stmt = $this->db->prepare("SELECT COUNT(comment_num) AS record_num FROM comments WHERE thread_id = :thread_id AND delflag = 0;");
-    $stmt->bindValue('thread_id',$thread_id);
+    $stmt->bindValue('thread_id', $thread_id);
     $stmt->execute();
     // FETCH_ASSOCは配列を記述し配列で取り出す設定をしている。
     $res = $stmt->fetch(\PDO::FETCH_ASSOC);
-  //   if (!$res) {
-  //     echo "\nPDO::errorInfo():\n";
-  //     print_r($stmt->errorInfo());
-  //     exit;
-  // }
+    //   if (!$res) {
+    //     echo "\nPDO::errorInfo():\n";
+    //     print_r($stmt->errorInfo());
+    //     exit;
+    // }
     return $res['record_num'];
   }
 
   //　スレッド1件取得
-  public function getThread($thread_id) {
+  public function getThread($thread_id)
+  {
     // $user_id = $_SESSION['me']->id;
     $stmt = $this->db->prepare("SELECT * FROM threads WHERE id = :id AND delflag = 0");
-    $stmt->bindValue(":id",$thread_id);
+    $stmt->bindValue(":id", $thread_id);
     $stmt->execute();
     return $stmt->fetch(\PDO::FETCH_OBJ);
   }
 
   //　コメント全件取得
-  public function getCommentAll($thread_id) {
+  public function getCommentAll($thread_id)
+  {
     $stmt = $this->db->prepare("SELECT comment_num,username,content,comments.created FROM (threads INNER JOIN comments on threads.id = comments.thread_id) INNER JOIN users ON comments.user_id = users.id WHERE threads.id =:thread_id AND comments.delflag = 0 ORDER BY comment_num ASC;");
     $stmt->execute([':thread_id' => $thread_id]);
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
   //　コメント投稿
-  public function createComment($values) {
+  public function createComment($values)
+  {
     try {
       $this->db->beginTransaction();
       $lastNum = 0;
       $sql = "SELECT comment_num FROM comments WHERE thread_id = :thread_id ORDER BY comment_num DESC LIMIT 1";
       $stmt = $this->db->prepare($sql);
-      $stmt->bindValue('thread_id',$values['thread_id']);
+      $stmt->bindValue('thread_id', $values['thread_id']);
       $stmt->execute();
       $res = $stmt->fetch(\PDO::FETCH_OBJ);
       $lastNum = $res->comment_num;
       $lastNum++;
       $sql = "INSERT INTO comments (thread_id,comment_num,user_id,content,created,modified) VALUES (:thread_id,:comment_num,:user_id,:content,now(),now())";
       $stmt = $this->db->prepare($sql);
-      $stmt->bindValue('thread_id',$values['thread_id']);
-      $stmt->bindValue('comment_num',$lastNum);
-      $stmt->bindValue('user_id',$values['user_id']);
-      $stmt->bindValue('content',$values['content']);
+      $stmt->bindValue('thread_id', $values['thread_id']);
+      $stmt->bindValue('comment_num', $lastNum);
+      $stmt->bindValue('user_id', $values['user_id']);
+      $stmt->bindValue('content', $values['content']);
       $stmt->execute();
       //　トランザクション処理を完了する
       $this->db->commit();
@@ -103,7 +114,8 @@ class Thread extends \Bbs\Model {
     }
   }
 
-  public function changeFavorite($values) {
+  public function changeFavorite($values)
+  {
     try {
       $this->db->beginTransaction();
       //　レコード取得
@@ -142,4 +154,9 @@ class Thread extends \Bbs\Model {
     }
   }
 
+  public function getCommentCsv($thread_id) {
+    $stmt = $this->db->prepare("SELECT comment_num,username,content,comments.created FROM (threads INNER JOIN comments on threads.id = comments.thread_id) INNER JOIN users ON comments.user_id = users.id WHERE threads.id =:thread_id AND comments.delflag = 0 ORDER BY comment_num ASC;");
+    $stmt->execute([':thread_id' => $thread_id]);
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+  }
 }

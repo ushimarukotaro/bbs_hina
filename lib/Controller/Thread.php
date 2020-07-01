@@ -2,8 +2,7 @@
 
 namespace Bbs\Controller;
 
-class Thread extends \Bbs\Controller
-{
+class Thread extends \Bbs\Controller {
   public function run()
   {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -61,6 +60,30 @@ class Thread extends \Bbs\Controller
     }
     header('Location: ' . SITE_URL . '/thread_disp.php?thread_id=' . $_POST['thread_id']);
     exit();
+  }
+
+  public function outputCsv($thread_id) {
+    try {
+      $threadModel = new \Bbs\Model\Thread();
+      $data = $threadModel->getCommentCsv($thread_id);
+      $csv = array('num','username','content','date');
+      $csv = mb_convert_encoding($csv,'SJIS-WIN','UTF-8');
+      $date = date("YmdH:i:s");
+      header('Content-Type: application/octet-stream');
+      header('Content-Disposition: attachment; filename='. $date . '_thread.csv');
+      $stream = fopen('php://output', 'w');
+      stream_filter_prepend($stream,'convert.iconv.utf-8/cp932');
+      $i = 0;
+      foreach ($data as $row) {
+        if($i === 0) {
+          fputcsv($stream , $csv);
+        }
+        fputcsv($stream , $row);
+        $i++;
+      }
+    } catch(Exception $e) {
+      echo $e->getMessage();
+    }
   }
 
   private function validate()
