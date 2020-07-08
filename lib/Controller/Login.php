@@ -4,7 +4,7 @@ class Login extends \Bbs\Controller {
   public function run() { 
     // ログインしていればトップページへ移動
     if ($this->isLoggedIn()) {
-      session_destroy();  //後で消す
+      // session_destroy();  
       header('Location: ' . SITE_URL);
       exit();
     }
@@ -53,7 +53,7 @@ class Login extends \Bbs\Controller {
       echo "トークンが不正です！";
       exit();
     }
-    // emailとppasswordのキーがなかった場合、強制終了
+    // emailとpasswordのキーがなかった場合、強制終了
     if (!isset($_POST['email']) || !isset($_POST['password'])) {
       echo "不正なフォームから登録されています！";
       exit();
