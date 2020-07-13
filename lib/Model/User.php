@@ -29,7 +29,8 @@ class User extends \Bbs\Model {
     if (!password_verify($values['password'], $user->password)) {
       throw new \Bbs\Exception\UnmatchEmailOrPassword();
     }
-    if ($user->delflag == 1) { //????
+    //　自分で書いた課題の所
+    if ($user->delflag == 1) { 
       throw new \Bbs\Exception\DeleteUser();
     }
     return $user;
