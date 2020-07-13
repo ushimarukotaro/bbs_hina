@@ -27,7 +27,6 @@ class Login extends \Bbs\Controller {
         $user = $userModel->login([
           'email' => $_POST['email'],
           'password' => $_POST['password'],
-          'delflag' => $_POST['delflag'],// ??
         ]);
       }
       catch (\Bbs\Exception\UnmatchEmailOrPassword $e) {
@@ -62,8 +61,5 @@ class Login extends \Bbs\Controller {
     if ($_POST['email'] === '' || $_POST['password'] === '') {
       throw new \Bbs\Exception\EmptyPost("メールアドレスとパスワードを入力してください！");
     }
-    // if (isset($_POST['delflag']) == true) {
-    //   throw new \Bbs\Exception\DeleteUser; // ??
-    // }
   }
 }
