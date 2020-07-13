@@ -16,6 +16,7 @@ $app->run();
     <p class="err"><?= h($app->getErrors('login')); ?></p>
     <button class="btn btn-primary" onclick="document.getElementById('login').submit();">ログイン</button>
     <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+    <input type="hidden" name="delflag" value="<?= $_POST['delflag'];  //?? ?>"> 
   </form>
   <p class="fs12"><a href="signup.php">ユーザー登録</a></p>
 </div><!--container -->

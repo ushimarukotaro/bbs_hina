@@ -4,7 +4,7 @@ class Login extends \Bbs\Controller {
   public function run() { 
     // ログインしていればトップページへ移動
     if ($this->isLoggedIn()) {
-      // session_destroy();  
+      //session_destroy();  
       header('Location: ' . SITE_URL);
       exit();
     }
@@ -26,7 +26,8 @@ class Login extends \Bbs\Controller {
         $userModel = new \Bbs\Model\User();
         $user = $userModel->login([
           'email' => $_POST['email'],
-          'password' => $_POST['password']
+          'password' => $_POST['password'],
+          'delflag' => $_POST['delflag'],// ??
         ]);
       }
       catch (\Bbs\Exception\UnmatchEmailOrPassword $e) {
@@ -61,8 +62,8 @@ class Login extends \Bbs\Controller {
     if ($_POST['email'] === '' || $_POST['password'] === '') {
       throw new \Bbs\Exception\EmptyPost("メールアドレスとパスワードを入力してください！");
     }
-    if (isset($_SESSION['delflag']) == 0) {
-      throw new \Bbs\Exception\EmptyPost("既に退会済みのユーザーです！");
-    }
+    // if (isset($_POST['delflag']) == true) {
+    //   throw new \Bbs\Exception\DeleteUser; // ??
+    // }
   }
 }
