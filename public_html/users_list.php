@@ -26,11 +26,11 @@ $users = $adminUser->adminUsers();
         <tr class="users_row">
           <td><input type="radio" id="<?= $user['id']; ?>" name="id" value="<?= h($user['id']); ?>"></td>
           <td><label for="<?= $user['id']; ?>" class="border_line"><?= h($user['id']); ?></label></td>
-          <td><input type="text" name="username<?= $user->id; ?>" value="<?= h($user['username']); ?>"></td>
-          <td><input type="text" name="email<?= $user->id;?>" value="<?= h($user['email']); ?>"></td>
-          <td><input type="text" name="image<?= $user->id; ?>" value="<?= h($user['image']); ?>"></td>
-          <td><input type="text" name="authority<?= $user->id; ?>" value="<?= h($user['authority']); ?>"></td>
-          <td><input type="text" name="delflag<?= $user->id; ?>" value="<?= h($user['delflag']); ?>"></td>
+          <td><input type="text" name="username<?= $user['id']; ?>" value="<?= h($user['username']); ?>"></td>
+          <td><input type="text" name="email<?= $user['id'];?>" value="<?= h($user['email']); ?>"></td>
+          <td><input type="text" name="image<?= $user['id']; ?>" value="<?= h($user['image']); ?>"></td>
+          <td><input type="text" name="authority<?= $user['id']; ?>" value="<?= h($user['authority']); ?>"></td>
+          <td><input type="text" name="delflag<?= $user['id']; ?>" value="<?= h($user['delflag']); ?>"></td>
         </tr>
       <?php endforeach; ?>
     </table>
