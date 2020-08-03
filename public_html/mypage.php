@@ -4,7 +4,6 @@ $app = new Bbs\Controller\UserUpdate();
 $app->run();
 ?>
 <h1 class="page__ttl">マイページ</h1>
-<?php var_dump($_SESSION['me']->delflag);  ?>
 <div class="container">
   <form action="" method="post" id="userupdate" class="form mypage-form row" enctype="multipart/form-data">
     <div class="col-md-8">

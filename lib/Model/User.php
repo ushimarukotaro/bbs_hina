@@ -47,7 +47,7 @@ class User extends \Bbs\Model {
 
   public function update($values) {
     $stmt = $this->db->prepare("UPDATE users SET username = :username,email = :email, image = :image, modified = now() where id = :id");
-    $stmt->execute([
+    $res = $stmt->execute([
       ':username' => $values['username'],
       ':email' => $values['email'],
       'image' => $values['userimg'],
@@ -65,4 +65,14 @@ class User extends \Bbs\Model {
       ':id' => $_SESSION['me']->id,
     ]);
   }
+
+  //追加課題
+  public function adminUsers() {
+    $stmt = $this->db->query("SELECT id,username,email,image,authority,delflag FROM users");
+    $stmt->execute();
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+  }
+
 }
+
+

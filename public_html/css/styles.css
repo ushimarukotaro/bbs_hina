@@ -339,3 +339,62 @@ textarea {
   height: auto;
   border-radius: 50%;
 }
+
+/*　-------追加課題-------　*/
+.new-btn {
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 20px 20px 20px 0;
+}
+
+.users_table {
+  max-width: 100%;
+}
+
+.users_tr {
+  border-top: solid 1px #6e6e6e;
+  border-bottom: solid 1px #6e6e6e;
+  padding-top: 50px;
+}
+
+.users_tr th {
+  padding: 20px 0;
+}
+
+.users_tr th:first-child{
+  padding: 20px 20px;
+}
+
+.users_row td {
+  padding: 16px;
+  padding-left: 0;
+  border-bottom: 1px solid #9c9c9c;
+}
+
+.form .border_line {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+
+.border_line:hover{
+  cursor: pointer;
+}
+
+.create_users_tr {
+  border-top: 1px solid #9c9c9c;
+  border-bottom: 1px solid #9c9c9c;
+}
+
+.create_users_tr th {
+  padding: 16px;
+  padding-left: 0px;
+}
+
+.create_users_row td {
+  padding: 16px 0 16px 0;
+}
+.create_users_row td input[type=text],
+.create_users_row td input[type=password] {
+  width: 90%;
+}

@@ -4,8 +4,6 @@ class UserUpdate extends \Bbs\Controller {
   public function run() {
     $this->showUser();
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // var_dump($_FILES['image']);
-      // exit;
       $this->updateUser();
     }
   }
