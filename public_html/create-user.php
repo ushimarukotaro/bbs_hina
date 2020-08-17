@@ -5,6 +5,7 @@ require_once(__DIR__ . '/header.php');
 <h1 class="page__ttl">ユーザー新規登録画面</h1>
 <?php if ($_SESSION['me']->authority != 99) { ?>
   <p class="err">このページを表示する権限がありません</p>
+  <a href="<?= SITE_URL; ?>/thread_all.php" class="btn btn-primary new-btn">戻る</a>
 <?php  } else { ?>
   <form method="post" action="" class="">
     <table class="admin_table">
