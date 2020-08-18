@@ -22,11 +22,11 @@ require_once(__DIR__ . '/header.php');
         <td><input type="password" name="password" value=""></td>
         <td><input type="text" name="email" value=""></td>
         <td><input type="text" name="image" value=""></td>
-        <td><input type="text" name="authority" value="0"></td>
-        <td><input type="text" name="delflag" value="1"></td>
+        <td><input type="text" name="authority" value="1"></td>
+        <td><input type="text" name="delflag" value="0"></td>
       </tr>
     </table>
-    <button class="btn btn-primary new-btn">登録</button>
+    <input type="submit" class="btn btn-primary new-btn" value="登録">
     <input type="hidden" name="token" value="<?= h($_SESSION["token"]); ?>">
   </form>
 <?php } ?>

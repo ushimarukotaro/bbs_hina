@@ -66,13 +66,27 @@ class User extends \Bbs\Model {
     ]);
   }
 
-  //追加課題
+  //ここから追加課題
   public function adminUsers() {
     $stmt = $this->db->query("SELECT id,username,email,image,authority,delflag FROM users");
     $stmt->execute();
     return $stmt->fetchAll(\PDO::FETCH_ASSOC);
   }
 
+  public function userUpdate($values) {
+    $stmt = $this->db->prepare("UPDATE users SET username = :username,email = :email, image = :image,authority = :authority,delflag = :delflag, modified = now() where id = :id");
+    $res = $stmt->execute([
+      ':username' => $values['username'],
+      ':email' => $values['email'],
+      ':image' => $values['image'],
+      ':authority' => $values['authority'],
+      ':delflag' => $values['delflag'],
+      ':id' => $_POST['id'],
+    ]);
+    if ($res === false) {
+      throw new \Bbs\Exception\DuplicateEmail();
+    }
+  }
 }
 
 

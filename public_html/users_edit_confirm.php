@@ -1,8 +1,7 @@
 <?php
 require_once(__DIR__ . '/header.php');
-$app = new Bbs\Controller\UserEditDone();
-$app->run();
-
+// $app = new Bbs\Controller\UserEditDone();
+// $app->run();
 ?>
 <h1 class="page__ttl">ユーザー情報変更確認</h1>
 <p class="user-disp">以下のユーザーを変更します。実行する場合は「実行」ボタンを押してください。</p>
@@ -30,11 +29,11 @@ $app->run();
     <input type="submit" class="btn btn-primary" value="実行">
     <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
     <input type="hidden" name="id" value="<?= h($_POST['id']); ?>">
-    <input type="hidden" name="username<?= $user['id']; ?>" value="<?= h($_POST['username' . $_POST['id']]); ?>">
-    <input type="hidden" name="email<?= $user['id']; ?>" value="<?= h($_POST['email' . $_POST['id']]); ?>">
-    <input type="hidden" name="image<?= $user['id']; ?>" value="<?= h($_POST['image' . $_POST['id']]); ?>">
-    <input type="hidden" name="authority<?= $user['id']; ?>" value="<?= h($_POST['authority' . $_POST['id']]); ?>">
-    <input type="hidden" name="delflag<?= $user['id']; ?>" value="<?= h($_POST['delflag' . $_POST['id']]); ?>">
+    <input type="hidden" name="username<?= $_POST['id']; ?>" value="<?= h($_POST['username' . $_POST['id']]); ?>">
+    <input type="hidden" name="email<?= $_POST['id']; ?>" value="<?= h($_POST['email' . $_POST['id']]); ?>">
+    <input type="hidden" name="image<?= $_POST['id']; ?>" value="<?= h($_POST['image' . $_POST['id']]); ?>">
+    <input type="hidden" name="authority<?= $_POST['id']; ?>" value="<?= h($_POST['authority' . $_POST['id']]); ?>">
+    <input type="hidden" name="delflag<?= $_POST['id']; ?>" value="<?= h($_POST['delflag' . $_POST['id']]); ?>">
   </form>
 </div>
 <!--container -->

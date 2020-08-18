@@ -2,7 +2,6 @@
 require_once(__DIR__ . '/header.php');
 $adminUser = new Bbs\Model\User();
 $users = $adminUser->adminUsers();
-//var_dump($users);
 ?>
 
 <h1 class="page__ttl">ユーザーテーブル管理画面</h1>
