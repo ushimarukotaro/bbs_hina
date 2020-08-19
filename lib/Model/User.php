@@ -87,6 +87,13 @@ class User extends \Bbs\Model {
       throw new \Bbs\Exception\DuplicateEmail();
     }
   }
+
+  public function deleteAdminUsers() {
+    $stmt = $this->db->prepare("DELETE FROM users WHERE id = :id");
+    $stmt->execute([
+      ':id' => $_POST['id'],
+    ]);
+  }
 }
 
 

@@ -398,3 +398,8 @@ textarea {
 .create_users_row td input[type=password] {
   width: 90%;
 }
+
+.delete_form {
+  display: flex;
+  justify-content: left;
+}

@@ -2,15 +2,14 @@
 
 namespace Bbs\Controller;
 
-class UserEditDone extends \Bbs\Controller {
+class AdminUserDeleteDone extends \Bbs\Controller {
   public function run() {
-    //$this->showUser();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $this->updateUser();
+      $this->deleteUser();
     }
   }
 
-  protected function updateUser() {
+  protected function deleteUser() {
     try {
       $this->validate();
     } catch (\Bbs\Exception\InvalidEmail $e) {
@@ -19,11 +18,11 @@ class UserEditDone extends \Bbs\Controller {
       $this->setErrors('username', $e->getMessage());
     }
     $this->setValues('id', $_POST['id']);
-    $this->setValues('username', $_POST['username' . $_POST['id']]);
-    $this->setValues('email', $_POST['email' . $_POST['id']]);
-    $this->setValues('image', $_POST['image' . $_POST['id']]);
-    $this->setValues('authority', $_POST['authority' . $_POST['id']]);
-    $this->setValues('delfalg', $_POST['delflag' . $_POST['id']]);
+    // $this->setValues('username', $_POST['username' . $_POST['id']]);
+    // $this->setValues('email', $_POST['email' . $_POST['id']]);
+    // $this->setValues('image', $_POST['image' . $_POST['id']]);
+    // $this->setValues('authority', $_POST['authority' . $_POST['id']]);
+    // $this->setValues('delfalg', $_POST['delflag' . $_POST['id']]);
 
     if ($this->hasError()) {
       return;
@@ -34,12 +33,12 @@ class UserEditDone extends \Bbs\Controller {
       // $user_img['name'] = uniqid("img_") . '.' . $ext;
       try {
         $userModel = new \Bbs\Model\User();
-        $userModel->userUpdate([
-          'username' => $_POST['username' . $_POST['id']],
-          'email' => $_POST['email' . $_POST['id']],
-          'image' => $_POST['image' . $_POST['id']],
-          'authority' => $_POST['authority' . $_POST['id']],
-          'delflag' => $_POST['delflag' . $_POST['id']],
+        $userModel->deleteAdminUsers([
+          // 'username' => $_POST['username' . $_POST['id']],
+          // 'email' => $_POST['email' . $_POST['id']],
+          // 'image' => $_POST['image' . $_POST['id']],
+          // 'authority' => $_POST['authority' . $_POST['id']],
+          // 'delflag' => $_POST['delflag' . $_POST['id']],
           'id' => $_POST['id'],
         ]);
       } catch (\Bbs\Exception\DuplicateEmail $e) {

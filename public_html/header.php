@@ -43,7 +43,7 @@ require_once(__DIR__ . '/../config/config.php'); // 栗岩追記
         if (isset($_SESSION['me'])) { ?>
           <div class="prof-show">
             <a href="<?= SITE_URL; ?>/mypage.php"><span class="name"><?= h($_SESSION['me']->username); ?></span></a>
-            <img class="header_img" src="./gazou/<?= h($_SESSION['me']->image); ?>" alt="">
+            <img class="header_img" src="<?= isset($_SESSION['me']->image) ? './gazou/' . h($_SESSION['me']->image) : './asset/img/noimage.png'; ?>" alt="">
           </div>
           <form action="logout.php" method="post" id="logout" class="user-btn">
             <input type="submit" value="ログアウト">
