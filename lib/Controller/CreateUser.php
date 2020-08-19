@@ -18,17 +18,24 @@ class CreateUser extends \Bbs\Controller {
     } catch (\Bbs\Exception\InvalidPassword $e) {
       $this->setErrors('password', $e->getMessage());
     }
-    $this->setValues('email', $_POST['email']);
     $this->setValues('username', $_POST['username']);
+    $this->setValues('email', $_POST['email']);
+    $this->setValues('password', $_POST['password']);
+    $this->setValues('image', $_POST['image']);
+    $this->setValues('authority', $_POST['authority']);
+    $this->setValues('delflag', $_POST['delflag']);
     if ($this->hasError()) {
       return;
     } else {
       try {
         $userModel = new \Bbs\Model\User();
-        $user = $userModel->create([
-          'email' => $_POST['email'],
+        $user = $userModel->adminCreate([
           'username' => $_POST['username'],
-          'password' => $_POST['password']
+          'email' => $_POST['email'],
+          'password' => $_POST['password'],
+          'image' => $_POST['image'],
+          'authority' => $_POST['authority'],
+          'delflag' => $_POST['delflag'],
         ]);
       }
       catch (\Bbs\Exception\DuplicateEmail $e) {
@@ -36,14 +43,14 @@ class CreateUser extends \Bbs\Controller {
         return;
       }
 
-      $userModel = new \Bbs\Model\User();
-      $user = $userModel->login([
-        'email' => $_POST['email'],
-        'password' => $_POST['password']
-      ]);
-      session_regenerate_id(true);
-      $_SESSION['me'] = $user;
-      header('Location: '. SITE_URL . '/thread_all.php');
+      // $userModel = new \Bbs\Model\User();
+      // $user = $userModel->login([
+      //   'email' => $_POST['email'],
+      //   'password' => $_POST['password']
+      // ]);
+      // session_regenerate_id(true);
+      // $_SESSION['me'] = $user;
+      header('Location: '. SITE_URL . '/users_list.php');
       exit();
     }
     // ToDo:ユーザー登録後、ログイン処理を行う

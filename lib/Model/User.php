@@ -94,6 +94,24 @@ class User extends \Bbs\Model {
       ':id' => $_POST['id'],
     ]);
   }
+
+  public function adminCreate($values) {
+    $stmt = $this->db->prepare("INSERT INTO users (username,email,password,image,authority,delflag,created,modified) VALUES (:username,:email,:password,NULL,:authority,:delflag,now(),now())");
+    $res = $stmt->execute([
+      ':username' => $values['username'],
+      ':email' => $values['email'],
+      // パスワードのハッシュ化
+      ':password' => password_hash($values['password'],PASSWORD_DEFAULT),
+      ':authority' => $values['authority'],
+      ':delflag' => $values['delflag'],
+    ]);
+    //　メールアドレスがユニークでなければfalseを返す
+    if ($res === false) {
+      // print_r($stmt->errorInfo());
+      // exit;
+      throw new \Bbs\Exception\DuplicateEmail();
+    }
+  }
 }
 
 

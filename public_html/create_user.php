@@ -7,7 +7,7 @@ require_once(__DIR__ . '/header.php');
   <p class="err">このページを表示する権限がありません</p>
   <a href="<?= SITE_URL; ?>/thread_all.php" class="btn btn-primary new-btn">戻る</a>
 <?php  } else { ?>
-  <form method="post" action="" class="">
+  <form method="post" action="create_user_done.php" class="">
     <table class="admin_table">
       <tr class="create_users_tr">
         <th>ユーザー名</th>

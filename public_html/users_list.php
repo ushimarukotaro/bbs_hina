@@ -10,7 +10,7 @@ $users = $adminUser->adminUsers();
   <p class="err">このページを表示する権限がありません</p>
   <a href="<?= SITE_URL; ?>/thread_all.php" class="btn btn-primary new-btn">戻る</a>
 <?php else : ?>
-  <a href="create-user.php" class="btn btn-primary new-btn">新規登録へ</a>
+  <a href="create_user.php" class="btn btn-primary new-btn">新規登録へ</a>
   <p>更新または削除を行うユーザーを選択してください</p>
   <form method="post" class="form users_table">
     <table class="admin_table">
