@@ -38,6 +38,7 @@ $app->run();
           <?php if (isset($app->getValues()->image)) : ?>
             <input type="submit" formaction="delete_image.php" class="btn image-delete" value="ユーザー画像削除">
           <?php endif; ?>
+          <?php var_dump(isset($_SESSION['me']->image)); ?>
         </div>
       </div>
     </div>

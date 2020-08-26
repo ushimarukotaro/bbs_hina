@@ -4,6 +4,8 @@ class DeleteImage extends \Bbs\Controller {
   public function run() {
     //$this->showUser();
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // var_dump($_FILES['image']);
+      // exit;
       $this->deleteImage();
     }
   }
@@ -37,10 +39,11 @@ class DeleteImage extends \Bbs\Controller {
         $userModel = new \Bbs\Model\User();
         //if($user_img['size'] > 0) {
           unlink('./gazou/'.$old_img);
-          //move_uploaded_file($user_img['tmp_name'],'./gazou/'.$user_img['name']);
+          //move_uploaded_file($user_img['tmp_name'],'./asset/img/noimage.png');
           $userModel->deleteUserImage([
             'id' => $_SESSION['me']->id,
           ]);
+          $user_img['name'] = NULL;
           $_SESSION['me']->image = $user_img['name'];
         //} else {
         //   $userModel->deleteUserImage([

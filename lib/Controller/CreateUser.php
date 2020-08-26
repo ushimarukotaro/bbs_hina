@@ -65,7 +65,7 @@ class CreateUser extends \Bbs\Controller {
     if ($_POST['username'] === '') {
       throw new \Bbs\Exception\InvalidName("ユーザー名が入力されていません!");
     }
-    if (!preg_match('/\A[a-zA-Z0-9]+\z/', $_POST['password'])) {
+    if (!preg_match('/\A[a-zA-Z0-9]+\z/', $_POST['password']) || $_POST['password'] === '') {
       throw new \Bbs\Exception\InvalidPassword("パスワードが不正です!");
     }
   }
