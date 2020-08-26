@@ -107,10 +107,15 @@ class User extends \Bbs\Model {
     ]);
     //　メールアドレスがユニークでなければfalseを返す
     if ($res === false) {
-      // print_r($stmt->errorInfo());
-      // exit;
       throw new \Bbs\Exception\DuplicateEmail();
     }
+  }
+
+  public function deleteUserImage() {
+    $stmt = $this->db->prepare("UPDATE users SET image = NULL,modified = now() WHERE id = :id");
+    $stmt->execute([
+      ':id' => $_SESSION['me']->id, 
+    ]);
   }
 }
 

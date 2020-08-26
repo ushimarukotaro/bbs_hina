@@ -43,13 +43,6 @@ class CreateUser extends \Bbs\Controller {
         return;
       }
 
-      // $userModel = new \Bbs\Model\User();
-      // $user = $userModel->login([
-      //   'email' => $_POST['email'],
-      //   'password' => $_POST['password']
-      // ]);
-      // session_regenerate_id(true);
-      // $_SESSION['me'] = $user;
       header('Location: '. SITE_URL . '/users_list.php');
       exit();
     }

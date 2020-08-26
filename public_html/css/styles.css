@@ -300,11 +300,11 @@ textarea {
   border-radius: 4px;
   position: absolute;
   left: 4px;
-  bottom: 90px;
+  bottom: 110px;
   cursor: pointer;
 }
 
-.file-btn:hover {
+.file-btn:hover, .image-delete:hover {
   background-color: #323232;
 }
 
@@ -402,4 +402,13 @@ textarea {
 .delete_form {
   display: flex;
   justify-content: left;
+}
+
+.image-delete {
+  margin-top: 50px;
+  width: 180px;
+  background-color: #3232328f;
+  padding: 6px 30px;
+  color: #fff;
+  font-size: 12px;
 }

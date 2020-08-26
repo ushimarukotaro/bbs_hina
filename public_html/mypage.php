@@ -35,6 +35,9 @@ $app->run();
           <div class="imgfile">
             <img src="<?= isset($app->getValues()->image) ? './gazou/' . h($app->getValues()->image) : './asset/img/noimage.png'; ?>" alt="">
           </div>
+          <?php if (isset($app->getValues()->image)) : ?>
+            <input type="submit" formaction="delete_image.php" class="btn image-delete" value="ユーザー画像削除">
+          <?php endif; ?>
         </div>
       </div>
     </div>

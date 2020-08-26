@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/header.php');
-
+$app = new Bbs\Controller\CreateUser();
+$app->run();
 ?>
 <h1 class="page__ttl">ユーザー新規登録画面</h1>
 <?php if ($_SESSION['me']->authority != 99) { ?>
@@ -29,6 +30,8 @@ require_once(__DIR__ . '/header.php');
     <input type="submit" class="btn btn-primary new-btn" value="登録">
     <input type="hidden" name="token" value="<?= h($_SESSION["token"]); ?>">
   </form>
+  <p class="err"><?= h($app->getErrors('username')); ?></p>
+
 <?php } ?>
 
 <?php
